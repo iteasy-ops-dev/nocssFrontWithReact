@@ -76,7 +76,7 @@ const FunctionForm = ({ func, onBack }) => {
 
     try {
       const response = await excuteAnsible(formDataToSend);
-      setResponseData(response.data);
+      setResponseData(response);
     } catch (error) {
       console.error("Error fetching data:", error);
       alert("데이터를 가져오는 동안 오류가 발생했습니다.");

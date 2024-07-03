@@ -9,12 +9,14 @@ export const fetchFunctions = async () => {
   }
 };
 
-//TODO: 멀티파일에 대해서 분기가 필요함.
 export const excuteAnsible = async (formDataToSend) => {
   try {
-    const response = await api.post('/getparam', formDataToSend);
+    const response = await api.post('/excuteAnsible', formDataToSend);
     return response.data;
   } catch (error) {
+    console.error(error)
     return [];
   }
 };
+
+//TODO: 멀티파일에 대해서 분기가 필요함.

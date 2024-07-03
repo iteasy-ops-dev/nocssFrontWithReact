@@ -1,21 +1,33 @@
 import React from 'react';
 
 const ChangeSslForm = ({ formData, handleChange }) => {
+	const handleLocalFileChange = (e) => {
+		const files = Array.from(e.target.files);
+
+    // Update formData with files as a new key-value pair
+    handleChange({
+      target: {
+        name: 'options.files',
+        value: files
+      }
+    });
+	}
+
 	const handleLocalChange = (e) => {
-		// const { value } = e.target;
-		// if (!validateDomain(value)) {
-		//   alert('정상적인 도메인이 아닙니다.');
-		//   return
-		// } 
-		handleChange(e); // 기존 핸들러 호출
-	};
+		handleChange(e);
+  };
 
 	return (
 		<div>
 			<h3>추가 옵션</h3>
 			<div>
-				<label>
-					도메인: <input type="text" name="options.domain" value={formData.options.domain} placeholder="도메인" onChange={handleLocalChange} required />
+				<label>도메인:
+					<input type="text" name="options.domain" value={formData.options.domain} placeholder="도메인" onChange={handleLocalChange} required />
+				</label>
+			</div>
+			<div>
+				<label>키파일:
+					<input type="file" multiple name="options.files" onChange={handleLocalFileChange} />
 				</label>
 			</div>
 		</div>
