@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import api from "../utils/api"
+import React, { useState, useEffect } from 'react';
 
 import ResponseView from "./ResponseView"
 import ChangePasswordForm from "./optionForms/ChangePasswordForm"
@@ -7,6 +6,7 @@ import ChangeSshPortForm from "./optionForms/ChangeSshPortForm"
 import ChangeSslForm from "./optionForms/ChangeSslForm"
 import InstallApacheForm from "./optionForms/InstallApacheForm"
 
+import { excuteAnsible } from "../utils/apiUtils";
 import { validateIp, validateAccount } from "../utils/validators";
 
 const FunctionForm = ({ func, onBack }) => {
@@ -22,6 +22,17 @@ const FunctionForm = ({ func, onBack }) => {
       ips: '',
       options: {}
     });
+
+  useEffect(() => {
+    // loading 상태가 변할 때마다 실행될 코드
+    if (loading) {
+      const startTime = Date.now();
+      const timer = setInterval(() => {
+        setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
+      }, 1000);
+      return () => clearInterval(timer); // cleanup 함수
+    }
+  }, [loading]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,39 +56,32 @@ const FunctionForm = ({ func, onBack }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (loading) return; // 이미 loading 중이면 중복 처리 방지
+
     const formDataToSend = {
       ...formData,
       ips: formData.ips.split(/[\n,]+/).map(ip => ip.trim()).filter(ip => ip)
     };
-    // console.log('Submitting form data:', formDataToSend);
+
     if (!formDataToSend.ips.every(validateIp)) {
-      alert("ip 잘못")
-      return
+      alert("잘못된 IP 주소가 포함되어 있습니다.");
+      return;
     }
     if (!validateAccount(formDataToSend.account)) {
-      alert("계정 잘못")
-      return
+      alert("잘못된 계정 정보입니다.");
+      return;
     }
 
     setLoading(true);
-    const startTime = Date.now();
-
-    // 타이머 시작
-    const timer = setInterval(() => {
-      setElapsedTime(Math.floor((Date.now() - startTime) / 1000));
-    }, 1000);
 
     try {
-      const response = await api.post('/getparam', formDataToSend);
-      console.log(response.data)
-      // return response.data;
-      setResponseData(response.data)
-      setLoading(false); // 데이터 패칭 종료
-      clearInterval(timer)
+      const response = await excuteAnsible(formDataToSend);
+      setResponseData(response.data);
     } catch (error) {
-      setLoading(false); // 데이터 패칭 종료
-      clearInterval(timer)
-      throw error;
+      console.error("Error fetching data:", error);
+      alert("데이터를 가져오는 동안 오류가 발생했습니다.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -112,22 +116,19 @@ const FunctionForm = ({ func, onBack }) => {
         {func === "change_ssl" ? <ChangeSslForm formData={formData} handleChange={handleChange} required /> : null}
         {func === "install_apache" ? <InstallApacheForm formData={formData} handleChange={handleChange} required /> : null}
         {/* 추가 옵션 확장 */}
-        <button type="submit">Submit</button>
+        <button type="submit" disabled={loading}>Submit</button>
       </form>
-      <button onClick={onBack}>Back</button>
-      {loading ? (
+      <button onClick={onBack} disabled={loading}>Back</button>
+      {loading && (
         <div>
-          <p>Loading...{elapsedTime} seconds</p>
+          <p>Loading... {elapsedTime} seconds</p>
         </div>
-      ) : (
-        <p></p>
       )}
       {responseData && (
-          <ResponseView responseData={responseData}/>
+        <ResponseView responseData={responseData}/>
       )}
     </div>
   );
 };
-
 
 export default FunctionForm;
