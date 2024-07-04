@@ -12,11 +12,21 @@ const InstallApacheForm = ({ formData, handleChange }) => {
 			<h3>추가 옵션</h3>
 			<div>
 				<label>
-					포트: <input type="text" name="options.apache_listen_port" value={formData.options.apache_listen_port} placeholder="도메인" onChange={handleLocalChange} required />
+					포트:
+					<input
+						type="text"
+						name="options.apache_listen_port"
+						value={formData.options.apache_listen_port}
+						placeholder="포트"
+						onChange={handleLocalChange}
+						required
+						defaultValue="80" />
 				</label>
-				<label>
-					도메인: <input type="text" name="options.domain" value={formData.options.domain} placeholder="도메인" onChange={handleLocalChange} required />
-				</label>
+				{/* <div>
+					<label>
+						도메인: <input type="text" name="options.domain" value={formData.options.domain} placeholder="도메인" onChange={handleLocalChange} required />
+					</label>
+				</div> */}
 			</div>
 		</div>
 	);

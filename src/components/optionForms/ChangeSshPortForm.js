@@ -16,7 +16,14 @@ const ChangeSshPortForm = ({ formData, handleChange }) => {
       <h3>추가 옵션</h3>
       <div>
         <label>
-          포트번호: <input type="text" name="options.new_port" value={formData.options.new_port} placeholder="바꿀 포트 번호" onChange={handleLocalChange} required />
+          포트번호:
+          <input
+            type="text"
+            name="options.new_port"
+            value={formData.options.new_port}
+            placeholder="바꿀 포트 번호"
+            onChange={handleLocalChange}
+            required />
         </label>
       </div>
     </div>

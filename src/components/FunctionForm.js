@@ -91,22 +91,50 @@ const FunctionForm = ({ func, onBack }) => {
       <form onSubmit={handleSubmit}>
         <div>
           <label>작업자:
-            <input type="text" name="name" value={formData.name} placeholder="작업자 이름" onChange={handleChange} required />
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              placeholder="작업자 이름"
+              onChange={handleChange}
+              required 
+              defaultValue="root"/>
           </label>
         </div>
         <div>
           <label>계정:
-            <input type="text" name="account" value={formData.account} placeholder="계정" onChange={handleChange} required />
+            <input
+              type="text"
+              name="account"
+              value={formData.account}
+              placeholder="계정"
+              onChange={handleChange}
+              required
+              defaultValue="root" />
           </label>
         </div>
         <div>
           <label>
-            비밀번호: <input type="password" name="password" placeholder="계정 비밀번호" value={formData.password} onChange={handleChange} required />
+            비밀번호:
+            <input
+              type="password"
+              name="password"
+              placeholder="계정 비밀번호"
+              value={formData.password}
+              onChange={handleChange}
+              required 
+              defaultValue="1123" />
           </label>
         </div>
         <div>
           <label>
-            원격서버IP: <textarea name="ips" value={formData.ips} placeholder="원격 서버 IP들" onChange={handleChange} required />
+            원격서버IP:
+            <textarea
+              name="ips"
+              value={formData.ips}
+              placeholder="원격 서버 IP들"
+              onChange={handleChange}
+              required />
           </label>
         </div>
         <hr />
@@ -124,8 +152,8 @@ const FunctionForm = ({ func, onBack }) => {
           <p>Loading... {elapsedTime} seconds</p>
         </div>
       )}
-      {responseData && (
-        <ResponseView responseData={responseData}/>
+      {!loading && responseData && (
+        <ResponseView responseData={responseData} />
       )}
     </div>
   );
