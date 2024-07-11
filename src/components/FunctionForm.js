@@ -83,12 +83,14 @@ const FunctionForm = ({ func, onBack }) => {
       alert("데이터를 가져오는 동안 오류가 발생했습니다.");
     } finally {
       setLoading(false);
+      setElapsedTime(0)
     }
   };
 
   return (
     <div>
       <h2>{func}</h2>
+      <h3>기본 옵션</h3>
       <form onSubmit={handleSubmit}>
         <div>
           <label>작업자:
@@ -151,7 +153,7 @@ const FunctionForm = ({ func, onBack }) => {
       <button onClick={onBack} disabled={loading}>Back</button>
       {loading && (
         <div>
-          <p>Loading... {elapsedTime} seconds</p>
+          <p>⏰ Loading... {elapsedTime} seconds</p>
         </div>
       )}
       {!loading && responseData && (
