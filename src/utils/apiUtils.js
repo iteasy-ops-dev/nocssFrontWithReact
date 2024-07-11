@@ -11,6 +11,7 @@ export const fetchFunctions = async () => {
 };
 
 export const excuteAnsible = async (formDataToSend) => {
+  console.log(formDataToSend)
   if (!formDataToSend.options.hasOwnProperty("files")) {
     try {
       const response = await api.post('/excuteAnsible', formDataToSend);

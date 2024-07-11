@@ -5,6 +5,7 @@ import ChangePasswordForm from "./optionForms/ChangePasswordForm"
 import ChangeSshPortForm from "./optionForms/ChangeSshPortForm"
 import ChangeSslForm from "./optionForms/ChangeSslForm"
 import InstallApacheForm from "./optionForms/InstallApacheForm"
+import PackageManager from "./optionForms/PackageManager"
 
 import { excuteAnsible } from "../utils/apiUtils";
 import { validateIp, validateAccount } from "../utils/validators";
@@ -143,6 +144,7 @@ const FunctionForm = ({ func, onBack }) => {
         {func === "change_ssh_port" ? <ChangeSshPortForm formData={formData} handleChange={handleChange} required /> : null}
         {func === "change_ssl" ? <ChangeSslForm formData={formData} handleChange={handleChange} required /> : null}
         {func === "install_apache" ? <InstallApacheForm formData={formData} handleChange={handleChange} required /> : null}
+        {func === "package_manager" ? <PackageManager formData={formData} handleChange={handleChange} required /> : null}
         {/* 추가 옵션 확장 */}
         <button type="submit" disabled={loading}>Submit</button>
       </form>
