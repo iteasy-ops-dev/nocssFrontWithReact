@@ -28,8 +28,7 @@ const ChangeSslForm = ({ formData, handleChange }) => {
 						value={formData.options.domain}
 						placeholder="도메인"
 						onChange={handleLocalChange}
-						required 
-						defaultValue="domain.com"/>
+						required />
 				</label>
 			</div>
 			<div>
@@ -39,7 +38,8 @@ const ChangeSslForm = ({ formData, handleChange }) => {
 						name="options.files"
 						onChange={handleLocalFileChange}
 						accept='.pem'
-						multiple />
+						multiple 
+						required />
 				</label>
 			</div>
 		</div>

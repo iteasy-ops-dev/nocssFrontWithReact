@@ -2,7 +2,7 @@ import React from 'react';
 
 const Header = () => (
   <header>
-    <h1>header</h1>
+    <h1>ITEASY Ops TEAM</h1>
     <hr></hr>
   </header>
 );
