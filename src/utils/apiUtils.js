@@ -6,43 +6,56 @@ export const fetchFunctions = async () => {
     const response = await api.get('/list_func');
     return response.data;
   } catch (error) {
+    console.error(error)
+    return [];
+  }
+};
+
+export const login = async (data) => {
+  try {
+    const response = await api.post('/login', data);
+    return response.status === 200;
+  } catch (error) {
+    console.error(error)
+    return [];
+  }
+};
+
+export const signup = async (data) => {
+  try {
+    const response = await api.post('/signup', data);
+    return response.status === 201;
+  } catch (error) {
+    console.error(error)
     return [];
   }
 };
 
 export const excuteAnsible = async (formDataToSend) => {
-  console.log(formDataToSend)
+  let config
+  let formData
   if (!formDataToSend.options.hasOwnProperty("files")) {
-    try {
-      const response = await api.post('/excuteAnsible', formDataToSend);
-      return response.data;
-    } catch (error) {
-      console.error(error)
-      return [];
+    config = {
+      headers: {
+        'Content-Type': 'application/json',
+      }
     }
+    formData = formDataToSend
   } else {
-    // 일반 Object를 formData로 변환하는 구문
-    const formData = toMultipartFormData(formDataToSend)
-
-    // formData 출력 구문
-    // console.log("> > > >  formdata 출력")
-    // for (const [key, value] of formData.entries()) {
-    //   console.log(key, value);
-    // };
-
-    const config = {
+    config = {
       headers: {
         'Content-Type': 'multipart/form-data',
       }
     }
-    try {
-      const response = await api.post('/excuteAnsibleWithFiles', formData, config);
-      return response.data;
-    } catch (error) {
-      console.error(error)
-      return [];
-    }
+    formData = toMultipartFormData(formDataToSend)
+  }
+
+  try {
+    const response = await api.post('/run', formData, config);
+    // const response = await api.post('/excuteAnsible', formDataToSend);
+    return response.data;
+  } catch (error) {
+    console.error(error)
+    return [];
   }
 };
-
-//TODO: 멀티파일에 대해서 분기가 필요함.
