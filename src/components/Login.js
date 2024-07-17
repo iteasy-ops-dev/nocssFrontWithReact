@@ -12,7 +12,7 @@ const Login = ({ onLogin }) => {
 		if (data) {
 			onLogin();
 		} else {
-			alert('로그인 실패');
+			alert("로그인 실패");
 		}
     
   };

@@ -112,7 +112,7 @@ const App = () => {
     }
   }, [isLoggedIn]);
 
-  const handleLogin = (token) => {
+  const handleLogin = () => {
     setIsLoggedIn(true);
   };
 

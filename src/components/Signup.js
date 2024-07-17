@@ -14,11 +14,11 @@ const Signup = ({ onSignup }) => {
       return;
     }
 		const data = await signup({ email, password, name })
-		if (data) {
-			alert('회원가입이 완료되었습니다. 이제 로그인해 주세요.');
+		if (data.code === 201) {
+			alert(data.message);
 			onSignup();
 		} else {
-			alert('회원가입 실패');
+			alert(data.message);
 		}
   };
 

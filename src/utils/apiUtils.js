@@ -3,7 +3,7 @@ import { toMultipartFormData } from '../utils/util'
 
 export const fetchFunctions = async () => {
   try {
-    const response = await api.get('/list_func');
+    const response = await api.get('/functions');
     return response.data;
   } catch (error) {
     console.error(error)
@@ -14,20 +14,33 @@ export const fetchFunctions = async () => {
 export const login = async (data) => {
   try {
     const response = await api.post('/login', data);
-    return response.status === 200;
+    console.log(response)
+    return {
+      code: response.status,
+    };
   } catch (error) {
     console.error(error)
-    return [];
+    // return {
+    //   code: error.response.status,
+    //   message: error.response.data
+    // };
   }
 };
 
 export const signup = async (data) => {
+
   try {
     const response = await api.post('/signup', data);
-    return response.status === 201;
+    return {
+      code: response.status,
+      message: "회원가입이 완료되었습니다. 이제 로그인해 주세요."
+    };
   } catch (error) {
     console.error(error)
-    return [];
+    return {
+      code: error.response.status,
+      message: error.response.data
+    };
   }
 };
 
