@@ -1,6 +1,16 @@
 import api from './api';
 import { toMultipartFormData } from '../utils/util'
 
+export const fetchProcessData = async (param) => {
+  try {
+    const response = await api.get('/get', param);
+    return response.data;
+  } catch (error) {
+    console.error(error)
+    return [];
+  }
+};
+
 export const fetchFunctions = async () => {
   try {
     const response = await api.get('/functions');
@@ -15,15 +25,18 @@ export const login = async (data) => {
   try {
     const response = await api.post('/login', data);
     console.log(response)
-    return {
-      code: response.status,
-    };
+    return true;
   } catch (error) {
     console.error(error)
-    // return {
-    //   code: error.response.status,
-    //   message: error.response.data
-    // };
+    return false
+  }
+};
+
+export const logout = async () => {
+  try {
+    await api.post('/logout');
+  } catch (error) {
+    console.error(error)
   }
 };
 

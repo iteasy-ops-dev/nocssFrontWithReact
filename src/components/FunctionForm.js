@@ -11,6 +11,7 @@ import { excuteAnsible } from "../utils/apiUtils";
 import { validateIp, validateAccount } from "../utils/validators";
 
 const FunctionForm = ({ func, onBack }) => {
+  const [user, setUser] = useState(null);
   const [responseData, setResponseData] = useState(null);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -23,6 +24,22 @@ const FunctionForm = ({ func, onBack }) => {
       ips: '',
       options: {}
     });
+
+  useEffect(() => {
+    const jwtCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
+    if (jwtCookie) {
+      const jwt = jwtCookie.split('=')[1];
+      const jwtParts = jwt.split('.');
+      if (jwtParts.length === 3) {
+        const decodedPayload = JSON.parse(atob(jwtParts[1]));
+        setUser(decodedPayload);
+      } else {
+        setUser(null);
+      }
+    } else {
+      setUser(null);
+    }
+  }, []);
 
   useEffect(() => {
     // loading 상태가 변할 때마다 실행될 코드
@@ -61,6 +78,7 @@ const FunctionForm = ({ func, onBack }) => {
 
     const formDataToSend = {
       ...formData,
+      name: user.email,
       ips: formData.ips.split(/[\n,]+/).map(ip => ip.trim()).filter(ip => ip)
     };
 
@@ -93,18 +111,6 @@ const FunctionForm = ({ func, onBack }) => {
       <h3>기본 옵션</h3>
       <form onSubmit={handleSubmit}>
         <div>
-          <label>작업자:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              placeholder="작업자 이름"
-              onChange={handleChange}
-              required 
-              defaultValue="root"/>
-          </label>
-        </div>
-        <div>
           <label>계정:
             <input
               type="text"
@@ -112,8 +118,7 @@ const FunctionForm = ({ func, onBack }) => {
               value={formData.account}
               placeholder="계정"
               onChange={handleChange}
-              required
-              defaultValue="root" />
+              required />
           </label>
         </div>
         <div>
@@ -125,8 +130,7 @@ const FunctionForm = ({ func, onBack }) => {
               placeholder="계정 비밀번호"
               value={formData.password}
               onChange={handleChange}
-              required 
-              defaultValue="1123" />
+              required />
           </label>
         </div>
         <div>
