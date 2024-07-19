@@ -41,7 +41,6 @@ export const logout = async () => {
 };
 
 export const signup = async (data) => {
-
   try {
     const response = await api.post('/signup', data);
     return {

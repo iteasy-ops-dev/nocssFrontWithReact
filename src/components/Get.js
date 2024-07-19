@@ -7,6 +7,8 @@ function Get({func}) {
   const [error, setError] = useState(null);
 
   // 검색 필터 상태
+  // TODO: 검색 필터를 백앤드 참조하여 더 정교하게 만들기
+  // TODO: 페이징을 할 것인가?
   const [type, setType] = useState('');
   const [name, setName] = useState('');
   const [account, setAccount] = useState('');
@@ -52,6 +54,7 @@ function Get({func}) {
     return <p>Error: {error}</p>;
   }
 
+  // TODO: IP 관련 데이터 표시를 어떻게 할 것인가
   return (
     <div>
       <h2>Ansible Process Status</h2>

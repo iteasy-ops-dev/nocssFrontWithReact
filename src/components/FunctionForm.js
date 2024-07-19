@@ -6,6 +6,7 @@ import ChangeSshPortForm from "./optionForms/ChangeSshPortForm"
 import ChangeSslForm from "./optionForms/ChangeSslForm"
 import InstallApacheForm from "./optionForms/InstallApacheForm"
 import PackageManager from "./optionForms/PackageManager"
+import WebHostManager from "./optionForms/WebHostManager"
 
 import { excuteAnsible } from "../utils/apiUtils";
 import { validateIp, validateAccount } from "../utils/validators";
@@ -108,7 +109,7 @@ const FunctionForm = ({ func, onBack }) => {
   return (
     <div>
       <h2>{func}</h2>
-      <h3>기본 옵션</h3>
+      <h3>접속 정보</h3>
       <form onSubmit={handleSubmit}>
         <div>
           <label>계정:
@@ -151,6 +152,7 @@ const FunctionForm = ({ func, onBack }) => {
         {func === "change_ssl" ? <ChangeSslForm formData={formData} handleChange={handleChange} required /> : null}
         {func === "install_apache" ? <InstallApacheForm formData={formData} handleChange={handleChange} required /> : null}
         {func === "package_manager" ? <PackageManager formData={formData} handleChange={handleChange} required /> : null}
+        {func === "webhost_manager" ? <WebHostManager formData={formData} handleChange={handleChange} required /> : null}
         {/* 추가 옵션 확장 */}
         <button type="submit" disabled={loading}>Submit</button>
       </form>

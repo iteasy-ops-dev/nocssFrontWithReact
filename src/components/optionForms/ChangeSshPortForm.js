@@ -28,16 +28,6 @@ const ChangeSshPortForm = ({ formData, handleChange }) => {
       </div>
     </div>
   );
-  // return (
-  //   <div>
-  //     <h3>추가 옵션</h3>
-  //     <div>
-  //       <label>
-  //         포트번호: <input type="text" name="options.NEW_PORT" value={formData.options.NEW_PORT} placeholder="바꿀 포트 번호" onChange={handleChange} required/>
-  //       </label>
-  //     </div>
-  //   </div>
-  // );
 }
 
 export default ChangeSshPortForm
