@@ -1,13 +1,15 @@
 import api from './api';
 import { toMultipartFormData } from '../utils/util'
 
+
+// TODO: 401 등의 에러 분기 작업
 export const fetchProcessData = async (param) => {
   try {
     const response = await api.get('/get', param);
     return response.data;
   } catch (error) {
     console.error(error)
-    return [];
+    return error;
   }
 };
 

@@ -19,6 +19,15 @@ const WebHostManager = ({ formData, handleChange }) => {
       <h3>추가 옵션</h3>
       <div>
         <label>
+          타입:
+          <select value={formData.options.setup} onChange={handleLocalChange}>
+            <option value="true">생성</option>
+            <option value="false">삭제</option>
+          </select>
+        </label>
+      </div>
+      <div>
+        <label>
           생성ID:
           <input
             type="text"
@@ -26,7 +35,7 @@ const WebHostManager = ({ formData, handleChange }) => {
             value={formData.options.user_id}
             onChange={handleLocalChange}
             placeholder="iteasy"
-             />
+          />
         </label>
       </div>
       <div>
@@ -38,55 +47,55 @@ const WebHostManager = ({ formData, handleChange }) => {
             value={formData.options.user_pass}
             onChange={handleLocalChange}
             placeholder="iteasy"
-             />
+          />
         </label>
       </div>
       <div>
         <label>
-        cband_limit:
+          cband_limit:
           <input
             type="text"
             name="options.cband_limit"
             value={formData.options.cband_limit}
             onChange={handleLocalChange}
             placeholder="3"
-             />
+          />
         </label>
       </div>
       <div>
         <label>
-        disk_quota:
+          disk_quota:
           <input
             type="text"
             name="options.disk_quota"
             value={formData.options.disk_quota}
             onChange={handleLocalChange}
             placeholder="unlimited"
-             />
+          />
         </label>
       </div>
       <div>
         <label>
-        vhost_domain:
+          vhost_domain:
           <input
             type="text"
             name="options.vhost_domain"
             value={formData.options.vhost_domain}
             onChange={handleLocalChange}
             placeholder="example.com"
-             />
+          />
         </label>
       </div>
       <div>
         <label>
-        listen_port:
+          listen_port:
           <input
             type="text"
             name="options.listen_port"
             value={formData.options.listen_port}
             onChange={handleLocalChange}
             placeholder="80"
-             />
+          />
         </label>
       </div>
     </div>

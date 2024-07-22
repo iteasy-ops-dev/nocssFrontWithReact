@@ -40,6 +40,7 @@ function Get({func}) {
         // 오류 처리
         setError(error.message);
         setLoading(false);
+        alert("에러")
       }
     };
 
