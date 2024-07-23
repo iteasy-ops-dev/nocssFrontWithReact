@@ -9,7 +9,7 @@ export const fetchProcessData = async (param) => {
     return response.data;
   } catch (error) {
     console.error(error)
-    return error;
+    return [];
   }
 };
 
@@ -80,7 +80,7 @@ export const excuteAnsible = async (formDataToSend) => {
 
   try {
     const response = await api.post('/run', formData, config);
-    // const response = await api.post('/excuteAnsible', formDataToSend);
+    console.log(response)
     return response.data;
   } catch (error) {
     console.error(error)

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 
-import ResponseView from "./ResponseView"
-import ChangePasswordForm from "./optionForms/ChangePasswordForm"
-import ChangeSshPortForm from "./optionForms/ChangeSshPortForm"
-import ChangeSslForm from "./optionForms/ChangeSslForm"
-import InstallApacheForm from "./optionForms/InstallApacheForm"
-import PackageManager from "./optionForms/PackageManager"
-import WebHostManager from "./optionForms/WebHostManager"
+import ResponseView from "../ResponseView"
+import ChangePasswordForm from "./optionForms/ChangePasswordForm/Index"
+import ChangeSshPortForm from "./optionForms/ChangeSshPortForm/Index"
+import ChangeSslForm from "./optionForms/ChangeSslForm/Index"
+import InstallApacheForm from "./optionForms/InstallApacheForm/Index"
+import PackageManager from "./optionForms/PackageManager/Index"
+import WebHostManager from "./optionForms/WebHostManager/Index"
 
-import { excuteAnsible } from "../utils/apiUtils";
-import { validateIp, validateAccount } from "../utils/validators";
+import { excuteAnsible } from "../../utils/apiUtils";
+import { validateIp, validateAccount, validateDBPassword } from "../../utils/validators";
 
 const FunctionForm = ({ func, onBack }) => {
   const [user, setUser] = useState(null);
@@ -82,13 +82,17 @@ const FunctionForm = ({ func, onBack }) => {
       name: user.email,
       ips: formData.ips.split(/[\n,]+/).map(ip => ip.trim()).filter(ip => ip)
     };
-
+    console.log(formDataToSend.options.db_password)
     if (!formDataToSend.ips.every(validateIp)) {
       alert("잘못된 IP 주소가 포함되어 있습니다.");
       return;
     }
     if (!validateAccount(formDataToSend.account)) {
       alert("잘못된 계정 정보입니다.");
+      return;
+    }
+    if (!validateDBPassword(formDataToSend.options.db_password)) {
+      alert("DB 비밀번호 기준에 맞지 않습니다.");
       return;
     }
 

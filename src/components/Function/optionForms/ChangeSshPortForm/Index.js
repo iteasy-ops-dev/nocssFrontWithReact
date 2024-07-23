@@ -1,5 +1,5 @@
 import React from 'react';
-import { validatePort } from '../../utils/validators'
+import { validatePort } from '../../../../utils/validators'
 
 const ChangeSshPortForm = ({ formData, handleChange }) => {
   const handleLocalChange = (e) => {
