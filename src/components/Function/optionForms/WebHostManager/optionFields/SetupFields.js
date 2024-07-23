@@ -3,10 +3,14 @@ import React, { useState } from 'react';
 const SetupFields = ({ formData, onChange }) => {
   // State to manage whether to show the database options
   const [showDbOptions, setShowDbOptions] = useState(false);
+  const [showQuotaOptions, setShowQuotaOptions] = useState(false);
 
   // Handler for the checkbox to toggle the database options
   const handleDbOptionsToggle = () => {
     setShowDbOptions(!showDbOptions);
+  };
+  const handleQuotaOptions = () => {
+    setShowQuotaOptions(!showQuotaOptions)
   };
 
   return (
@@ -71,6 +75,32 @@ const SetupFields = ({ formData, onChange }) => {
           />
         </label>
       </div>
+      <div>
+        <label>
+          Quota옵션 보기:
+          <input
+            type="checkbox"
+            checked={showQuotaOptions}
+            onChange={handleQuotaOptions}
+          />
+        </label>
+      </div>
+      {showQuotaOptions && (
+        <>
+         <div>
+            <label>
+              Quata Limit:
+              <input
+                type="text"
+                name="options.disk_quota"
+                value={formData.options.disk_quota}
+                onChange={onChange}
+                placeholder="unlimited"
+              />
+            </label>
+          </div>
+        </>
+      )}
       <div>
         <label>
           DB옵션 보기:
