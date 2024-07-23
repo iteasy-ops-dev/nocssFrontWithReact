@@ -7,9 +7,15 @@ import React from 'react';
 // disk_quota: "unlimited"
 // vhost_domain: "example.com"
 // listen_port: "80"
+
+// mysql_root_user: "root"
+// mysql_root_password: "1123"
+// db_user: "iteasy_db_user"
+// db_name: "iteasy_db"
+// db_password: "iteasy_pwd"
 const WebHostManager = ({ formData, handleChange }) => {
   const handleLocalChange = (e) => {
-    const { value } = e.target;
+    // const { value } = e.target;
     // TODO: 각 데이터 패턴 체크하기
     handleChange(e); // 기존 핸들러 호출
   };
@@ -20,7 +26,10 @@ const WebHostManager = ({ formData, handleChange }) => {
       <div>
         <label>
           타입:
-          <select value={formData.options.setup} onChange={handleLocalChange}>
+          <select
+            name="options.setup"
+            value={formData.options.setup}
+            onChange={handleLocalChange}>
             <option value="true">생성</option>
             <option value="false">삭제</option>
           </select>
@@ -28,7 +37,7 @@ const WebHostManager = ({ formData, handleChange }) => {
       </div>
       <div>
         <label>
-          생성ID:
+          생성 계정:
           <input
             type="text"
             name="options.user_id"
@@ -40,13 +49,73 @@ const WebHostManager = ({ formData, handleChange }) => {
       </div>
       <div>
         <label>
-          비밀번호:
+          계정 비밀번호:
           <input
             type="text"
             name="options.user_pass"
             value={formData.options.user_pass}
             onChange={handleLocalChange}
             placeholder="iteasy"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          db admin:
+          <input
+            type="text"
+            name="options.mysql_root_user"
+            value={formData.options.mysql_root_user}
+            onChange={handleLocalChange}
+            placeholder="root"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          db admin 비밀번호:
+          <input
+            type="text"
+            name="options.mysql_root_password"
+            value={formData.options.mysql_root_password}
+            onChange={handleLocalChange}
+            placeholder="mysql_root_password"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          db 생성 계졍:
+          <input
+            type="text"
+            name="options.db_user"
+            value={formData.options.db_user}
+            onChange={handleLocalChange}
+            placeholder="db_user"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          db 생성 계정 비밀번호:
+          <input
+            type="text"
+            name="options.db_password"
+            value={formData.options.db_password}
+            onChange={handleLocalChange}
+            placeholder="db_password"
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          db 생성 이름:
+          <input
+            type="text"
+            name="options.db_name"
+            value={formData.options.db_name}
+            onChange={handleLocalChange}
+            placeholder="db_name"
           />
         </label>
       </div>
@@ -62,7 +131,7 @@ const WebHostManager = ({ formData, handleChange }) => {
           />
         </label>
       </div>
-      <div>
+      {/* <div>
         <label>
           disk_quota:
           <input
@@ -73,7 +142,7 @@ const WebHostManager = ({ formData, handleChange }) => {
             placeholder="unlimited"
           />
         </label>
-      </div>
+      </div> */}
       <div>
         <label>
           vhost_domain:

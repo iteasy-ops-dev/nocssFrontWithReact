@@ -59,6 +59,7 @@ export const signup = async (data) => {
 };
 
 export const excuteAnsible = async (formDataToSend) => {
+  console.log(formDataToSend)
   let config
   let formData
   if (!formDataToSend.options.hasOwnProperty("files")) {
