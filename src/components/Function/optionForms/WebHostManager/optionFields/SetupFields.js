@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 const SetupFields = ({ formData, onChange }) => {
-  // State to manage whether to show the database options
   const [showDbOptions, setShowDbOptions] = useState(false);
   const [showQuotaOptions, setShowQuotaOptions] = useState(false);
 
@@ -21,7 +20,7 @@ const SetupFields = ({ formData, onChange }) => {
           <input
             type="text"
             name="options.user_id"
-            value={formData.options.user_id}
+            value={formData.options.user_id || ""}
             onChange={onChange}
             placeholder="iteasy"
           />
@@ -33,7 +32,7 @@ const SetupFields = ({ formData, onChange }) => {
           <input
             type="text"
             name="options.user_pass"
-            value={formData.options.user_pass}
+            value={formData.options.user_pass || ""}
             onChange={onChange}
             placeholder="iteasy"
           />
@@ -45,7 +44,7 @@ const SetupFields = ({ formData, onChange }) => {
           <input
             type="text"
             name="options.cband_limit"
-            value={formData.options.cband_limit}
+            value={formData.options.cband_limit || ""}
             onChange={onChange}
             placeholder="3"
           />
@@ -57,7 +56,7 @@ const SetupFields = ({ formData, onChange }) => {
           <input
             type="text"
             name="options.vhost_domain"
-            value={formData.options.vhost_domain}
+            value={formData.options.vhost_domain || ""}
             onChange={onChange}
             placeholder="example.com"
           />
@@ -69,7 +68,7 @@ const SetupFields = ({ formData, onChange }) => {
           <input
             type="text"
             name="options.listen_port"
-            value={formData.options.listen_port}
+            value={formData.options.listen_port || ""}
             onChange={onChange}
             placeholder="80"
           />
@@ -89,11 +88,11 @@ const SetupFields = ({ formData, onChange }) => {
         <>
          <div>
             <label>
-              Quata Limit:
+              Quota Limit:
               <input
                 type="text"
                 name="options.disk_quota"
-                value={formData.options.disk_quota}
+                value={formData.options.disk_quota || ""}
                 onChange={onChange}
                 placeholder="unlimited"
               />
@@ -119,7 +118,7 @@ const SetupFields = ({ formData, onChange }) => {
               <input
                 type="text"
                 name="options.mysql_root_user"
-                value={formData.options.mysql_root_user}
+                value={formData.options.mysql_root_user || ""}
                 onChange={onChange}
                 placeholder="root"
               />
@@ -131,7 +130,7 @@ const SetupFields = ({ formData, onChange }) => {
               <input
                 type="text"
                 name="options.mysql_root_password"
-                value={formData.options.mysql_root_password}
+                value={formData.options.mysql_root_password || ""}
                 onChange={onChange}
                 placeholder="mysql_root_password"
               />
@@ -143,7 +142,7 @@ const SetupFields = ({ formData, onChange }) => {
               <input
                 type="text"
                 name="options.db_user"
-                value={formData.options.db_user}
+                value={formData.options.db_user || ""}
                 onChange={onChange}
                 placeholder="db_user"
               />
@@ -155,7 +154,7 @@ const SetupFields = ({ formData, onChange }) => {
               <input
                 type="text"
                 name="options.db_password"
-                value={formData.options.db_password}
+                value={formData.options.db_password || ""}
                 onChange={onChange}
                 placeholder="db_password"
               />
@@ -167,7 +166,7 @@ const SetupFields = ({ formData, onChange }) => {
               <input
                 type="text"
                 name="options.db_name"
-                value={formData.options.db_name}
+                value={formData.options.db_name || ""}
                 onChange={onChange}
                 placeholder="db_name"
               />
@@ -180,4 +179,3 @@ const SetupFields = ({ formData, onChange }) => {
 };
 
 export default SetupFields;
-

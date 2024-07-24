@@ -71,6 +71,8 @@ const FunctionForm = ({ func, onBack }) => {
         [name]: value
       });
     }
+    // 폼데이터 확인
+    // console.log(formData)
   };
 
   const handleSubmit = async (e) => {
@@ -82,7 +84,7 @@ const FunctionForm = ({ func, onBack }) => {
       name: user.email,
       ips: formData.ips.split(/[\n,]+/).map(ip => ip.trim()).filter(ip => ip)
     };
-    console.log(formDataToSend.options.db_password)
+    
     if (!formDataToSend.ips.every(validateIp)) {
       alert("잘못된 IP 주소가 포함되어 있습니다.");
       return;

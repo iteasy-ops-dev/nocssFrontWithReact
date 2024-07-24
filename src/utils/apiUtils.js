@@ -13,6 +13,19 @@ export const fetchProcessData = async (param) => {
   }
 };
 
+export const fetchErpParser = async (url) => {
+  try {
+    const response = await api.post('/erp-parser', {
+      url: url
+    });
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error(error)
+    return [];
+  }
+};
+
 export const fetchFunctions = async () => {
   try {
     const response = await api.get('/functions');
