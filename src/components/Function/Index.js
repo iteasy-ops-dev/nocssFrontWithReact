@@ -55,7 +55,7 @@ const FunctionForm = ({ func, onBack }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+    
     if (name.startsWith("options.")) {
       const optionName = name.split(".")[1];
       setFormData((prevFormData) => ({
@@ -72,7 +72,7 @@ const FunctionForm = ({ func, onBack }) => {
       });
     }
     // 폼데이터 확인
-    // console.log(formData)
+    console.log(formData)
   };
 
   const handleSubmit = async (e) => {
