@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchProcessData } from "../utils/apiUtils";
 
-function Get({func}) {
+function Get({ func }) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -16,37 +16,37 @@ function Get({func}) {
   const [duration, setDuration] = useState('');
   const [comparison, setComparison] = useState(''); // 예: 'gt', 'lt', 'gte', 'lte'
 
+  const fetchData = async () => {
+    setLoading(true);
+
+    try {
+      // API 호출
+      const response = await fetchProcessData({
+        params: {
+          type: type,
+          name: name,
+          account: account,
+          status: status,
+          duration: duration,
+          comparison: comparison
+        }
+      });
+
+      // 데이터 설정
+      setData(response);
+      setLoading(false);
+    } catch (error) {
+      // 오류 처리
+      setError(error.message);
+      setLoading(false);
+      setData([])
+      alert("에러")
+    }
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-
-      try {
-        // API 호출
-        const response = await fetchProcessData({
-          params: {
-            type: type,
-            name: name,
-            account: account,
-            status: status,
-            duration: duration,
-            comparison: comparison
-          }
-        });
-
-        // 데이터 설정
-        setData(response);
-        setLoading(false);
-      } catch (error) {
-        // 오류 처리
-        setError(error.message);
-        setLoading(false);
-        setData([])
-        alert("에러")
-      }
-    };
-
     fetchData();
-  }, [type, name, account, status, duration, comparison]);
+  }, [type, status, comparison]);
 
   if (loading) {
     return <p>Loading...</p>;
@@ -56,11 +56,17 @@ function Get({func}) {
     return <p>Error: {error}</p>;
   }
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("get submit")
+    fetchData();
+  }
+
   // TODO: IP 관련 데이터 표시를 어떻게 할 것인가
   return (
     <div>
       <h2>Ansible Process Status</h2>
-      <form onSubmit={(e) => { e.preventDefault(); }}>
+      <form onSubmit={handleSubmit}>
         <div>
           <label>
             Type:
@@ -74,7 +80,7 @@ function Get({func}) {
         </div>
         <div>
           <label>
-            Name:
+            Worker:
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
           </label>
         </div>
@@ -88,9 +94,8 @@ function Get({func}) {
           <label>
             Status:
             <select value={status} onChange={(e) => setStatus(e.target.value)}>
-              <option value="">Any</option>
-              <option value="false">실패</option>
               <option value="true">성공</option>
+              <option value="false">실패</option>
             </select>
           </label>
         </div>
@@ -98,13 +103,8 @@ function Get({func}) {
           <label>
             Duration:
             <input type="text" value={duration} onChange={(e) => setDuration(e.target.value)} />
-          </label>
-        </div>
-        <div>
-          <label>
-            Comparison:
             <select value={comparison} onChange={(e) => setComparison(e.target.value)}>
-              <option value="">Any</option>
+              <option value="">Comparison</option>
               <option value="gt">Greater than</option>
               <option value="lt">Less than</option>
               <option value="gte">Greater than or equal to</option>
@@ -112,31 +112,61 @@ function Get({func}) {
             </select>
           </label>
         </div>
+        {/* <div>
+          <label>
+            Comparison:
+            <select value={comparison} onChange={(e) => setComparison(e.target.value)}>
+              <option value="">-</option>
+              <option value="gt">Greater than</option>
+              <option value="lt">Less than</option>
+              <option value="gte">Greater than or equal to</option>
+              <option value="lte">Less than or equal to</option>
+            </select>
+          </label>
+        </div> */}
         <div>
           <button type="submit">Search</button>
         </div>
       </form>
 
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <th>총 작업 갯수</th>
+              <th>총 소요 시간</th>
+              <th>평균 소요 시간</th>
+            </tr>
+          </thead>
+          <tbody>
+            <td>{data.length}</td>
+            <td>{data.reduce((accumulator, item) => accumulator + item.Duration, 0)}s</td>
+            {/* TODO: 이거 왜 useState 사용하면 이상하게 되냐? 내가 계산 잘못 한줄*/}
+            <td>{data.reduce((accumulator, item) => accumulator + item.Duration, 0) / data.length}s</td>
+          </tbody>
+        </table>
+      </div>
+
       <table>
         <thead>
           <tr>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Account</th>
-            <th>Status</th>
-            <th>Timestamp</th>
-            <th>Duration</th>
+            <th>📋 Type</th>
+            <th>⚙️ Worker</th>
+            <th>🕺 Account</th>
+            <th>⭕️ Status</th>
+            <th>📅 Timestamp</th>
+            <th>⏰ Duration</th>
           </tr>
         </thead>
         <tbody>
           {data.map(item => (
             <tr key={item.ID}>
-              <td>{item.Type}</td>
-              <td>{item.Name}</td>
-              <td>{item.Account}</td>
+              <td>📋 {item.Type}</td>
+              <td>⚙️ {item.Name}</td>
+              <td>🕺 {item.Account}</td>
               <td>{item.Status ? '🟢' : '🔴'}</td>
-              <td>{new Date(item.Timestamp * 1000).toLocaleString()}</td>
-              <td>{item.Duration}s</td>
+              <td>📅 {new Date(item.Timestamp * 1000).toLocaleString()}</td>
+              <td>⏰ {item.Duration}s</td>
             </tr>
           ))}
         </tbody>

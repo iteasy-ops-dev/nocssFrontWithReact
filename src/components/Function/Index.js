@@ -72,7 +72,7 @@ const FunctionForm = ({ func, onBack }) => {
       });
     }
     // 폼데이터 확인
-    console.log(formData)
+    // console.log(formData)
   };
 
   const handleSubmit = async (e) => {

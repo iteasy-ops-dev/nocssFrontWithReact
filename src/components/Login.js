@@ -9,12 +9,12 @@ const Login = ({ onLogin }) => {
     e.preventDefault();
 
 		const data = await login({ email, password })
-		if (data) {
-			onLogin();
-		} else {
-			alert("로그인 실패");
-		}
-    
+    console.log(`Status Code: ${data.status}`)
+    if (data.status === 200) {
+      onLogin()
+    } else {
+      alert(data.data)
+    }
   };
 
   return (

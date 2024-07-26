@@ -3,14 +3,12 @@ import React, { useState } from 'react';
 const SetupFields = ({ formData, onChange }) => {
   const [showDbOptions, setShowDbOptions] = useState(false);
   const [showQuotaOptions, setShowQuotaOptions] = useState(false);
+  const [showCbandOptions, setShowCbandOptions] = useState(false);
 
   // Handler for the checkbox to toggle the database options
-  const handleDbOptionsToggle = () => {
-    setShowDbOptions(!showDbOptions);
-  };
-  const handleQuotaOptions = () => {
-    setShowQuotaOptions(!showQuotaOptions)
-  };
+  const handleDbOptionsToggle = () => { setShowDbOptions(!showDbOptions); };
+  const handleQuotaOptions = () => { setShowQuotaOptions(!showQuotaOptions) };
+  const handleCbandOptions = () => { setShowCbandOptions(!showCbandOptions) };
 
   return (
     <div>
@@ -40,18 +38,6 @@ const SetupFields = ({ formData, onChange }) => {
       </div>
       <div>
         <label>
-          cband_limit:
-          <input
-            type="text"
-            name="options.cband_limit"
-            value={formData.options.cband_limit || ""}
-            onChange={onChange}
-            placeholder="3"
-          />
-        </label>
-      </div>
-      <div>
-        <label>
           vhost_domain:
           <input
             type="text"
@@ -76,6 +62,30 @@ const SetupFields = ({ formData, onChange }) => {
       </div>
       <div>
         <label>
+          Cband옵션 보기:
+          <input
+            type="checkbox"
+            checked={showCbandOptions}
+            onChange={handleCbandOptions}
+          />
+        </label>
+        {showCbandOptions && (
+          <>
+            <label>
+              Cband_limit:
+              <input
+                type="text"
+                name="options.cband_limit"
+                value={formData.options.cband_limit || ""}
+                onChange={onChange}
+                placeholder="3"
+              />
+            </label>
+          </>
+        )}
+      </div>
+      <div>
+        <label>
           Quota옵션 보기:
           <input
             type="checkbox"
@@ -83,10 +93,8 @@ const SetupFields = ({ formData, onChange }) => {
             onChange={handleQuotaOptions}
           />
         </label>
-      </div>
-      {showQuotaOptions && (
-        <>
-         <div>
+        {showQuotaOptions && (
+          <>
             <label>
               Quota Limit:
               <input
@@ -97,9 +105,9 @@ const SetupFields = ({ formData, onChange }) => {
                 placeholder="unlimited"
               />
             </label>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
       <div>
         <label>
           DB옵션 보기:

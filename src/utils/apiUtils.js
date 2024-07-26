@@ -39,11 +39,9 @@ export const fetchFunctions = async () => {
 export const login = async (data) => {
   try {
     const response = await api.post('/login', data);
-    console.log(response)
-    return true;
+    return response;
   } catch (error) {
-    console.error(error)
-    return false
+    return error.response
   }
 };
 
@@ -60,7 +58,7 @@ export const signup = async (data) => {
     const response = await api.post('/signup', data);
     return {
       code: response.status,
-      message: "회원가입이 완료되었습니다. 이제 로그인해 주세요."
+      message: "회원가입이 완료되었습니다. 이메일 인증 후 로그인해주세요."
     };
   } catch (error) {
     console.error(error)
